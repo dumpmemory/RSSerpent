@@ -8,15 +8,13 @@ on:
 jobs:
   run:
     runs-on: ubuntu-latest
-    env:
-      IS_PRE_RELEASE: false
     steps:
       - uses: actions/checkout@v2
       - run: git fetch origin doc:doc
       - uses: fregante/setup-git-user@v1
       - uses: actions/setup-python@v2
         with:
-          python-version: "3.10"
+          python-version: "3.x"
       - name: "Setup Poetry"
         run: |
           pip install --upgrade pip
@@ -35,8 +33,8 @@ jobs:
           artifacts: "dist/*"
           token: ${{ secrets.GITHUB_TOKEN }}
           prerelease: ${{ env.IS_PRE_RELEASE }}
-      - name: "Publish to PyPI"
-        if: github.repository == 'RSSerpent/RSSerpent'
-        env:
-          POETRY_PYPI_TOKEN_PYPI: ${{ secrets.PYPI_TOKEN }}
-        run: poetry publish
+      # - name: "Publish to PyPI"
+      #   if: github.repository == 'RSSerpent/RSSerpent'
+      #   env:
+      #     POETRY_PYPI_TOKEN_PYPI: ${{ secrets.PYPI_TOKEN }}
+      #   run: poetry publish
